@@ -21,13 +21,20 @@ const CartItem = styled.div`
   }
 
   .stepper {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 20px;
+  }
+  .price {
+    flex-basis: 80px;
+    text-align: right;
+    font-weight: 700;
   }
   @media screen and (max-width: 720px) {
     flex-direction: column;
     img {
       max-width: 100%;
+    }
+    .name {
+      text-align: center;
     }
   }
 `;
@@ -38,8 +45,13 @@ const CartList = styled.ul`
 
 const Total = styled.div`
   text-align: right;
+  padding-right: 0px;
+  padding-left: 0px;
 `;
 
+const CartTitle = styled.h1`
+  font-size: 2.5rem;
+`;
 export default function Cart() {
   const { cart, dispatch } = useCart();
   const urls = cart.map((i) => `products/${i.id}`);
@@ -71,7 +83,7 @@ export default function Cart() {
               }
             />
           </div>
-          <p>${(price * quantity).toFixed(2)}</p>
+          <p className="price">${(price * quantity).toFixed(2)}</p>
         </CartItem>
       </li>
     );
@@ -85,21 +97,23 @@ export default function Cart() {
     0
   );
   return (
-    <section className="p-grid p-justify-end">
-      <h1 className="p-col-12"> Shopping Cart </h1>
+    <section className="p-grid ">
+      <CartTitle className="p-col-12"> Shopping Cart </CartTitle>
 
       <CartList className="p-col-12">{cart.map(renderItem)}</CartList>
-      <Total className="p-col-12">
-        <h1>Total: ${totalPrice.toFixed(2)}</h1>
-      </Total>
-      {cart.length > 0 && (
-        <BigButton
-          className="p-col-12 p-md-4"
-          onClick={() => navigate("/checkout")}
-        >
-          Checkout
-        </BigButton>
-      )}
+      <div className="p-grid p-col-12 p-justify-end">
+        <Total className="p-col-12">
+          <h1>Total: ${totalPrice.toFixed(2)}</h1>
+        </Total>
+        {cart.length > 0 && (
+          <BigButton
+            className="p-col-12 p-md-4"
+            onClick={() => navigate("/checkout")}
+          >
+            Checkout
+          </BigButton>
+        )}
+      </div>
     </section>
   );
 }

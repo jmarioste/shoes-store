@@ -12,7 +12,7 @@ html {
 }
 
 body {
-  font-family: "open sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   color: #364147;
   background-color: #fff;
