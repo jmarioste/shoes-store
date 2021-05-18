@@ -4,8 +4,7 @@ import PageNotFound from "PageNotFound";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import useFetch from "services/useFetch";
-import Spinner from "components/Spinner";
-import { Select } from "components";
+import { Select, BigButton, Spinner } from "components";
 import styled from "styled-components";
 
 export default function Detail() {
@@ -20,7 +19,7 @@ export default function Detail() {
   if (error) throw error;
 
   function addToCart() {
-    dispatch({ type: "add", id, sku });
+    dispatch({ type: "add", id, sku, price: product.price });
     navigate("/cart");
   }
 
@@ -53,16 +52,10 @@ export default function Detail() {
           ))}
         </Select>
         <p className="p-col-12">{product.description}</p>
-        <p className="p-col-12">
-          <button
-            disabled={!sku}
-            className="btn btn-primary"
-            onClick={addToCart}
-          >
-            {" "}
-            Add to Cart
-          </button>
-        </p>
+        <BigButton disabled={!sku} onClick={addToCart} className="p-col-12">
+          {" "}
+          Add to Cart
+        </BigButton>
       </div>
     </div>
   );

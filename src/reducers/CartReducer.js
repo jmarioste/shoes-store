@@ -1,28 +1,27 @@
-export default function cartReducer(cart, action){
-  const {id, sku, quantity} = action;
-  switch(action.type){
+export default function cartReducer(cart, action) {
+  const { id, sku, quantity, price } = action;
+  switch (action.type) {
     case "empty":
       return [];
     case "add":
-      return addToCart(cart, id, sku);
+      return addToCart(cart, id, sku, price);
     case "updateQuantity":
       return updateQuantity(cart, sku, quantity);
     default:
       throw new Error("Unhandled action " + action.type);
-
   }
 }
 
-function addToCart(cart, id, sku) {
+function addToCart(cart, id, sku, price) {
   const isItemInCart = cart.find((item) => item.sku === sku);
 
-    if (isItemInCart) {
-      return cart.map((item) =>
-        item.sku === sku ? { ...item, quantity: item.quantity + 1 } : item
-      );
-    } else {
-      return [...cart, { id, sku, quantity: 1 }];
-    }
+  if (isItemInCart) {
+    return cart.map((item) =>
+      item.sku === sku ? { ...item, quantity: item.quantity + 1, price } : item
+    );
+  } else {
+    return [...cart, { id, sku, quantity: 1, price }];
+  }
 }
 
 function updateQuantity(cart, sku, quantity) {
@@ -44,7 +43,7 @@ export function saveCartToStorage(cart) {
   }
 }
 
-export function loadCartFromStorage(){
+export function loadCartFromStorage() {
   try {
     return JSON.parse(localStorage.getItem("cart")) ?? [];
     // return data || [];

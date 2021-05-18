@@ -10,7 +10,9 @@ const CartContext = createContext(null);
 export function CartProvider(props) {
   const [cart, dispatch] = useReducer(cartReducer, initialCart);
   const value = { cart, dispatch };
-  useEffect(saveCartToStorage, [cart]);
+  useEffect(() => {
+    saveCartToStorage(cart);
+  }, [cart]);
   return (
     <CartContext.Provider value={value}>{props.children}</CartContext.Provider>
   );

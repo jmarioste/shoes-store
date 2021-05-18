@@ -6,7 +6,8 @@ const Select = styled.select`
   padding: 0 10px;
   font-size: 14px;
   border: 1px solid #5d6d7c;
-  border-radius: 5px;
+  cursor: pointer;
+  /* border-radius: 5px; */
   option {
     color: black;
     background: white;
@@ -14,6 +15,7 @@ const Select = styled.select`
     white-space: pre;
     min-height: 20px;
     padding: 0px 2px 1px;
+    cursor: pointer;
   }
 `;
 
