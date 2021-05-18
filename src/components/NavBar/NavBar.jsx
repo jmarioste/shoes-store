@@ -1,3 +1,4 @@
+import { useCart } from "contexts/CartContext";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -29,6 +30,16 @@ const StyledNavBar = styled.nav`
         color: #5d6d7c;
         padding: 20px;
       }
+      .badge {
+        margin-left: 10px;
+        display: inline-block;
+        width: 24px;
+        background-color: #5d6d7c;
+        border-radius: 11px;
+        font-size: 0.8rem;
+        color: white;
+        text-align: center;
+      }
     }
     li.brand {
       padding-left: 20px;
@@ -43,6 +54,9 @@ const StyledNavBar = styled.nav`
 `;
 
 const NavBar = () => {
+  const { cart } = useCart();
+
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <StyledNavBar>
       <ul>
@@ -56,7 +70,10 @@ const NavBar = () => {
         </li>
 
         <li className="link">
-          <Link to="/cart">Cart</Link>
+          <Link to="/cart">
+            Cart
+            <span className="badge">{count}</span>
+          </Link>
         </li>
         <li className="spacer"></li>
         <li className="link">
