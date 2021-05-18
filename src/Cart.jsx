@@ -85,7 +85,7 @@ export default function Cart() {
     0
   );
   return (
-    <section className="p-grid">
+    <section className="p-grid p-justify-end">
       <h1 className="p-col-12"> Shopping Cart </h1>
 
       <CartList className="p-col-12">{cart.map(renderItem)}</CartList>
@@ -93,7 +93,10 @@ export default function Cart() {
         <h1>Total: ${totalPrice.toFixed(2)}</h1>
       </Total>
       {cart.length > 0 && (
-        <BigButton className="p-col-12" onClick={() => navigate("/checkout")}>
+        <BigButton
+          className="p-col-12 p-md-4"
+          onClick={() => navigate("/checkout")}
+        >
           Checkout
         </BigButton>
       )}
