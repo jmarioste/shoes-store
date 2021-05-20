@@ -2,21 +2,12 @@
 import { BigButton } from "components";
 import { useCart } from "contexts/CartContext";
 import React, { useReducer, useState } from "react";
-import shippingAddressReducer from "reducers/CheckoutReducer";
+import { checkoutReducer, validators } from "reducers/CheckoutReducer";
 import { saveShippingAddress } from "services/shippingService";
+import { FiArrowRight } from "react-icons/fi";
 
-import { required, isValidEmail, isFormValid } from "utils/validators";
+import { getAllErrors } from "utils/validators";
 import { Content, CheckoutForm, CheckoutSummary } from "./Checkout.styles.jsx";
-
-const validators = {
-  email: [required, isValidEmail],
-  firstName: [required],
-  lastName: [required],
-  streetAddress: [required],
-  city: [required],
-  zipCode: [required],
-  country: [required],
-};
 
 // Declaring outside component to avoid recreation on each render
 const initialState = {
@@ -49,49 +40,58 @@ const STATUS = {
   COMPLETED: 4,
 };
 
+function renderError(error, index) {
+  return (
+    <label key={"email_error_" + index} role="error" className="overline">
+      {error}
+    </label>
+  );
+}
 export default function Checkout() {
   console.log("inside checkout");
-  const { dispatch } = useCart();
-  const [checkoutState, dispatchCheckout] = useReducer(
-    shippingAddressReducer,
-    initialState
-  );
-
+  const { dispatch: dispatchCart } = useCart();
+  const [checkoutState, dispatch] = useReducer(checkoutReducer, initialState);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState("");
-  // const [touched, setTouched] = useState({ city: false, country: false });
-  //derived state
-  const errors = getErrors(checkoutState);
-  const isValid = Object.keys(errors).length === 0;
 
-  function handleChange(e) {
-    e.persist();
-    const { id, value } = e.target;
-    console.log("inside handleChange", id, value);
-    dispatchCheckout({
-      type: e.target.id,
-      value: e.target.value,
+  const errors = checkoutState.errors;
+
+  function handleChange(event) {
+    event.persist();
+    const { id, value } = event.target;
+    dispatch({
+      type: "update_" + id,
+      value: value,
     });
   }
 
   function handleBlur(event) {
     event.preventDefault();
-    console.log("inside handle blur");
     event.persist();
-    const valid =
-      // isFormValid(checkoutState.data, validators) &&
-      isFormValid(checkoutState.data.shippingAddress, validators);
-    console.log("is form valid", valid);
+    const { id, value } = event.target;
+    if (!validators[id]) return;
+
+    dispatch({
+      type: "error_" + id,
+      value: value,
+    });
+  }
+
+  function isFormValid(errors) {
+    return Object.keys(errors).every((id) => {
+      return errors[id].every((value) => value === true);
+    });
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setStatus(STATUS.SUBMITTING);
-    if (isValid) {
+    const _errors = getAllErrors(checkoutState.data, validators);
+    if (isFormValid(_errors)) {
       try {
-        await saveShippingAddress(checkoutState);
+        await saveShippingAddress(checkoutState.data);
         setStatus(STATUS.COMPLETED);
-        dispatch({ type: "empty" });
+        dispatchCart({ type: "empty" });
       } catch (error) {
         console.error(error);
         // setStatus(STATUS.ERROR);
@@ -99,12 +99,12 @@ export default function Checkout() {
       }
     } else {
       setStatus(STATUS.SUBMITTED);
+      //dispatch errors to re-render
+      dispatch({
+        type: "error_all",
+        value: _errors,
+      });
     }
-  }
-
-  function getErrors() {
-    const result = {};
-    return result;
   }
 
   if (saveError) throw saveError;
@@ -115,7 +115,7 @@ export default function Checkout() {
       <h1>Checkout</h1>
       <CheckoutForm>
         <h5>Contact Information</h5>
-        <label>Email address:</label>
+        {errors.email.map(renderError)}
         <input
           id="email"
           type="text"
@@ -126,6 +126,7 @@ export default function Checkout() {
 
         <h5>Shipping Address</h5>
         <label>Full name</label>
+        {errors.firstName.map(renderError)}
         <input
           id="firstName"
           type="text"
@@ -133,6 +134,7 @@ export default function Checkout() {
           onChange={handleChange}
           onBlur={handleBlur}
         ></input>
+        {errors.lastName.map(renderError)}
         <input
           id="lastName"
           type="text"
@@ -141,6 +143,7 @@ export default function Checkout() {
           onBlur={handleBlur}
         ></input>
         <label>Complete address: </label>
+        {errors.streetAddress.map(renderError)}
         <input
           id="streetAddress"
           type="text"
@@ -148,6 +151,7 @@ export default function Checkout() {
           onChange={handleChange}
           onBlur={handleBlur}
         ></input>
+        {errors.zipCode.map(renderError)}
         <input
           id="zipCode"
           type="text"
@@ -155,6 +159,7 @@ export default function Checkout() {
           onChange={handleChange}
           onBlur={handleBlur}
         ></input>
+        {errors.city.map(renderError)}
         <input
           id="city"
           type="text"
@@ -162,6 +167,7 @@ export default function Checkout() {
           onChange={handleChange}
           onBlur={handleBlur}
         ></input>
+        {errors.country.map(renderError)}
         <input
           id="country"
           type="text"
@@ -181,7 +187,7 @@ export default function Checkout() {
           disabled={status === STATUS.SUBMITTING}
           onClick={handleSubmit}
         >
-          Save Shipping Info
+          Continue <FiArrowRight />
         </BigButton>
       </CheckoutForm>
       <CheckoutSummary>

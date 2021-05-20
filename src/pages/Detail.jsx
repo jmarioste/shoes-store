@@ -10,15 +10,16 @@ export default function Detail() {
   const { dispatch } = useCart();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [sku, setSku] = useState("");
-  const { data: product, loading, error } = useFetch("products/" + id);
 
+  const { data: product, loading, error } = useFetch("products/" + id);
+  const [sku, setSku] = useState(product?.skus[0].sku || "");
   if (loading) return <Spinner />;
   if (!product) return <PageNotFound />;
   if (error) throw error;
 
   function addToCart() {
-    dispatch({ type: "add", id, sku, price: product.price });
+    const _sku = sku || product.skus[0].sku;
+    dispatch({ type: "add", id, sku: _sku, price: product.price });
     navigate("/cart");
   }
 
@@ -31,24 +32,23 @@ export default function Detail() {
         <h1>{product.name}</h1>
 
         <h4>${product.price}</h4>
-        <p id="size">Size</p>
-        <Select
-          id="size-select"
-          value={sku}
-          onChange={(event) => setSku(event.target.value)}
-        >
-          <option>Choose size</option>
-          {product.skus.map((s) => (
-            <option key={s.sku} value={s.sku}>
-              {s.size}
-            </option>
-          ))}
-        </Select>
+        {sku.size && <p id="size">Size</p>}
+        {sku.size && (
+          <Select
+            id="size-select"
+            value={sku}
+            onChange={(event) => setSku(event.target.value)}
+          >
+            <option>Choose size</option>
+            {product.skus.map((s) => (
+              <option key={s.sku} value={s.sku}>
+                {s.size}
+              </option>
+            ))}
+          </Select>
+        )}
         <p id="description">{product.description}</p>
-        <BigButton disabled={!sku} onClick={addToCart}>
-          {" "}
-          Add to Cart
-        </BigButton>
+        <BigButton onClick={addToCart}> Add to Cart</BigButton>
       </ProductDetails>
     </Content>
   );

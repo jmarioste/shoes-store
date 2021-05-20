@@ -5,6 +5,7 @@ export const Content = styled.div`
   flex: 1 0;
   align-self: center;
   max-width: 960px;
+  width: 100%;
   padding: 20px;
   grid-template-columns: repeat(2, 1fr);
   @media screen and (max-width: 720px) {

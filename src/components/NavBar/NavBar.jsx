@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledNavBar = styled.nav`
+const _NavBar = styled.nav`
   display: flex;
   justify-content: center;
 
@@ -51,7 +51,9 @@ const StyledNavBar = styled.nav`
       }
     }
     li.brand {
-      padding-left: 20px;
+      a {
+        padding: 10px;
+      }
       img {
         max-height: 40px;
       }
@@ -67,18 +69,20 @@ const NavBar = () => {
 
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
   return (
-    <StyledNavBar>
+    <_NavBar>
       <ul>
-        <li className="link">
+        <li className="link brand">
           <Link to="/">
-            {/* <img alt="Carved Rock Fitness" src="/images/logo.png" /> */}
-            Carved Rock Fitness
+            <img alt="Carved Rock Fitness" src="/images/logo-white.png" />
+            {/* Carved Rock Fitness */}
           </Link>
         </li>
         <li className="link">
           <Link to="/shoes">Shoes</Link>
         </li>
-
+        <li className="link">
+          <Link to="/backpacks">Backpacks</Link>
+        </li>
         <li className="link">
           <Link to="/cart">
             Cart
@@ -90,7 +94,7 @@ const NavBar = () => {
           <a href="#!">Login</a>
         </li>
       </ul>
-    </StyledNavBar>
+    </_NavBar>
   );
 };
 

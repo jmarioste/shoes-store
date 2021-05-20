@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import useFetch from "services/useFetch";
 
-import { Spinner, Select, ProductItem, PageNotFound } from "components";
+import { Spinner, ProductItem, PageNotFound, Select } from "components";
 
 const Content = styled.div`
   padding: 20px;
@@ -11,6 +11,7 @@ const Content = styled.div`
   flex: 1 0;
   align-self: center;
   max-width: 960px;
+  width: 100%;
   align-items: flex-start;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 60px 1fr;
@@ -74,16 +75,23 @@ export default function Products() {
   if (loading) return <Spinner />;
   if (products.length === 0) return <PageNotFound />;
 
+  const showFilter = category === "shoes";
   return (
     <Content>
-      <label htmlFor="size">Filter by Size</label>{" "}
-      <Select id="size" value={size} onChange={() => setSize(size)}>
-        <option value="">All sizes</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-      </Select>
+      {showFilter && <label htmlFor="size">Filter by Size</label>}
+      {showFilter && (
+        <Select
+          id="size"
+          value={size}
+          onChange={(e) => setSize(e.target.value)}
+        >
+          <option value="">All sizes</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </Select>
+      )}
       <div id="product-list">
         {filteredProducts.map((product) => {
           return (

@@ -24,6 +24,9 @@ export const Content = styled(_Content)`
       "form"
       "summary";
   }
+  label[role="error"] {
+    color: var(--color-error);
+  }
 `;
 
 export const CheckoutForm = styled.div`

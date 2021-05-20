@@ -36,7 +36,7 @@ function Item({ item, products }) {
       <img src={imageUrl} alt={name} />
       <ProductName>
         <h5>{name}</h5>
-        <p>Size: {size}</p>
+        {size && <p>Size: {size}</p>}
       </ProductName>
       <Stepper
         value={quantity}

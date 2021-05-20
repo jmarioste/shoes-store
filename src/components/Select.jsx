@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 const Select = styled.select`
   height: 35px;
-  color: #5d6d7c;
+  color: var(--color-primary);
   padding: 0 10px;
   font-size: 14px;
-  border: 1px solid #5d6d7c;
+  border: 1px solid var(--color-primary);
   cursor: pointer;
   /* border-radius: 5px; */
   option {
-    color: black;
+    color: var(--color-on-secondary);
     background: white;
     display: flex;
     white-space: pre;

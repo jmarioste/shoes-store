@@ -57,6 +57,58 @@
         }
       ],
       "description": "Look stylish while stomping in the mud."
+    },
+    {
+      "id": 4,
+      "category": "backpacks",
+      "image": "backpack1.jpg",
+      "name": "Rucksack",
+      "price": 150.95,
+      "skus": [
+        {
+          "sku": "40"
+        }
+      ],
+      "description": "Look stylish while carrying in the mud."
+    },
+    {
+      "id": 5,
+      "category": "backpacks",
+      "image": "backpack2.jpg",
+      "name": "Booksack",
+      "price": 175.95,
+      "skus": [
+        {
+          "sku": "41"
+        }
+      ],
+      "description": "Everything you need for adventure in a single place."
+    },
+    {
+      "id": 6,
+      "category": "backpacks",
+      "image": "backpack3.jpg",
+      "name": "Laptap Buckpack",
+      "price": 163.75,
+      "skus": [
+        {
+          "sku": "42"
+        }
+      ],
+      "description": "Adventuring while your gadgets put in a single place"
+    },
+    {
+      "id": 7,
+      "category": "backpacks",
+      "image": "backpack4.jpg",
+      "name": "Bumbble Blee",
+      "price": 199.75,
+      "skus": [
+        {
+          "sku": "43"
+        }
+      ],
+      "description": "Style and adventure in one"
     }
   ],
   "shippingAddress": [
@@ -66,24 +118,63 @@
       "country": ""
     },
     {
-      "city": "",
-      "country": "",
+      "data": {
+        "email": "jmarioste@gmail.com",
+        "firstName": "jaser",
+        "lastName": "arioste",
+        "streetAddress": "55 ",
+        "city": "Cebu City",
+        "zipCode": "6000",
+        "country": "Philippines",
+        "phone": ""
+      },
+      "errors": {
+        "email": [],
+        "firstName": [],
+        "lastName": [],
+        "streetAddress": [],
+        "city": [],
+        "zipCode": [],
+        "country": [],
+        "phone": [
+          true
+        ]
+      },
       "id": 2
     },
     {
-      "city": "a",
-      "country": "China",
+      "data": {
+        "email": "jmarioste@gmail.com",
+        "firstName": "jaser",
+        "lastName": "arioste",
+        "streetAddress": "55",
+        "city": "Cebu City",
+        "zipCode": "6000",
+        "country": "Philippines",
+        "phone": ""
+      },
+      "errors": {
+        "email": [],
+        "firstName": [],
+        "lastName": [],
+        "streetAddress": [],
+        "city": [],
+        "zipCode": [],
+        "country": [],
+        "phone": []
+      },
       "id": 3
     },
     {
-      "city": "Alabama",
-      "country": "India",
+      "email": "jmarioste@gmail.com",
+      "firstName": "jaser",
+      "lastName": "arioste",
+      "streetAddress": "55",
+      "city": "Cebu City",
+      "zipCode": "6000",
+      "country": "Philippines",
+      "phone": "",
       "id": 4
-    },
-    {
-      "city": "asdasd",
-      "country": "China",
-      "id": 5
     }
   ]
 }

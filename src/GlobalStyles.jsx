@@ -10,7 +10,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-secondary-dark: #c59f00;
     --color-on-primary: #f2f2f2;
     --color-on-secondary: #222222;
-
+    --color-error: #B00020;
     --size-h1: 6rem;
     --size-h2: 
   }
@@ -75,6 +75,11 @@ export const GlobalStyles = createGlobalStyle`
     letter-spacing: .15px;
     font-size: 1rem;
     font-weight: normal;
+  }
+  .overline {
+    font-size: .625rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
   }
   button {
     font-weight: medium;

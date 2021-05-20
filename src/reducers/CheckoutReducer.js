@@ -1,141 +1,115 @@
+import { produce } from "immer";
+import { isValidEmail, required } from "utils/validators";
+
 export function checkoutReducer(state, action) {
-  switch (action.type) {
-    case "data":
-      return {
-        ...state,
-        data: action.data,
-      };
-    case "errors":
-      return {
-        ...state,
-        errors: action.errors,
-      };
+  if (action.type.startsWith("update")) {
+    return updateReducer(state, action);
+  } else {
+    return errorReducer(state, action);
+  }
+}
+
+function updateReducer(state, action) {
+  const { type, value } = action;
+  switch (type) {
+    case "update_email":
+      return produce(state, (draft) => {
+        draft.data.email = value;
+      });
+
+    case "update_firstName":
+      return produce(state, (draft) => {
+        draft.data.firstName = value;
+      });
+    case "update_lastName":
+      return produce(state, (draft) => {
+        draft.data.lastName = value;
+      });
+    case "update_streetAddress":
+      return produce(state, (draft) => {
+        draft.data.streetAddress = value;
+      });
+    case "update_zipCode":
+      return produce(state, (draft) => {
+        draft.data.zipCode = value;
+      });
+    case "update_city":
+      return produce(state, (draft) => {
+        draft.data.city = value;
+      });
+    case "update_country":
+      return produce(state, (draft) => {
+        draft.data.country = value;
+      });
+    case "update_phone":
+      return produce(state, (draft) => {
+        draft.data.phone = value;
+      });
     default:
       throw new Error(`Unhandled exeption for ${action.type}`);
   }
 }
 
-export default function shippingAddressReducer(state, action) {
-  switch (action.type) {
-    case "email":
-      return setEmail(state, action.value);
-
-    case "firstName":
-      return setFirstName(state, action.value);
-    case "lastName":
-      return setLastName(state, action.value);
-    case "streetAddress":
-      return setStreetAddress(state, action.value);
-    case "zipCode":
-      return setZipCode(state, action.value);
-    case "city":
-      return setCity(state, action.value);
-    case "country":
-      return setCountry(state, action.value);
-    case "phone":
-      return setPhone(state, action.value);
+function errorReducer(state, action) {
+  const { type, value } = action;
+  switch (type) {
+    case "error_all": {
+      return produce(state, (draft) => {
+        draft.errors = value;
+      });
+    }
+    case "error_email":
+      return produce(state, (draft) => {
+        draft.errors.email = getErrors("email", value);
+      });
+    case "error_firstName":
+      return produce(state, (draft) => {
+        draft.errors.firstName = getErrors("firstName", value);
+      });
+    case "error_lastName":
+      return produce(state, (draft) => {
+        draft.errors.lastName = getErrors("lastName", value);
+      });
+    case "error_streetAddress":
+      return produce(state, (draft) => {
+        draft.errors.streetAddress = getErrors("streetAddress", value);
+      });
+    case "error_zipCode":
+      return produce(state, (draft) => {
+        draft.errors.zipCode = getErrors("zipCode", value);
+      });
+    case "error_city":
+      return produce(state, (draft) => {
+        draft.errors.city = getErrors("city", value);
+      });
+    case "error_country":
+      return produce(state, (draft) => {
+        draft.errors.country = getErrors("country", value);
+      });
+    case "error_phone":
+      return produce(state, (draft) => {
+        draft.errors.phone = getErrors("phone", value);
+      });
     default:
       throw new Error(`Unhandled exeption for ${action.type}`);
   }
 }
 
-function setEmail(state, email) {
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      email,
-    },
-  };
+function getErrors(type, value) {
+  return validators[type].reduce((acc, validator) => {
+    const isValid = validator;
+    if (!isValid(value)) {
+      acc.push(validator.error);
+    }
+    return acc;
+  }, []);
 }
-function setFirstName(state, firstName) {
-  console.log(state);
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      shippingAddress: {
-        ...state.data.shippingAddress,
-        firstName,
-      },
-    },
-  };
-}
-
-function setLastName(state, lastName) {
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      shippingAddress: {
-        ...state.data.shippingAddress,
-        lastName,
-      },
-    },
-  };
-}
-
-function setStreetAddress(state, streetAddress) {
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      shippingAddress: {
-        ...state.data.shippingAddress,
-        streetAddress,
-      },
-    },
-  };
-}
-
-function setZipCode(state, zipCode) {
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      shippingAddress: {
-        ...state.data.shippingAddress,
-        zipCode,
-      },
-    },
-  };
-}
-
-function setCity(state, city) {
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      shippingAddress: {
-        ...state.data.shippingAddress,
-        city,
-      },
-    },
-  };
-}
-
-function setCountry(state, country) {
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      shippingAddress: {
-        ...state.data.shippingAddress,
-        country,
-      },
-    },
-  };
-}
-
-function setPhone(state, phone) {
-  return {
-    ...state,
-    data: {
-      ...state.data,
-      shippingAddress: {
-        ...state.data.shippingAddress,
-        phone,
-      },
-    },
-  };
-}
+export const validators = {
+  email: [required("Email"), isValidEmail],
+  firstName: [required("First name")],
+  lastName: [required("Last name")],
+  streetAddress: [required("Street address")],
+  city: [required("City")],
+  zipCode: [required("Zip code")],
+  country: [required("Country")],
+};

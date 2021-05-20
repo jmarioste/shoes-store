@@ -1,25 +1,23 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react";
-import cartReducer, {
-  loadCartFromStorage,
-  saveCartToStorage,
-} from "reducers/CartReducer";
+import React, { createContext, useContext, useReducer } from "react";
 
-const initialInfo = loadCartFromStorage();
-const CartContext = createContext(null);
+import { checkoutReducer } from "reducers/CheckoutReducer";
+import { isValidEmail, required } from "utils/validators";
 
-export function CartProvider(props) {
-  const [cart, dispatch] = useReducer(cartReducer, initialInfo);
-  const value = { cart, dispatch };
-  useEffect(() => {
-    saveCartToStorage(cart);
-  }, [cart]);
+// const initialInfo = loadCartFromStorage();
+const CheckoutContext = createContext(null);
+
+export function CheckoutProvider(props) {
+  const [checkoutState, dispatch] = useReducer(checkoutReducer, initialState);
+  const value = { checkoutState, dispatch };
   return (
-    <CartContext.Provider value={value}>{props.children}</CartContext.Provider>
+    <CheckoutContext.Provider value={value}>
+      {props.children}
+    </CheckoutContext.Provider>
   );
 }
 
-export function useCart() {
-  const context = useContext(CartContext);
+export function useCheckout() {
+  const context = useContext(CheckoutContext);
   if (!context) {
     throw new Error(
       "Context not found. Use <CartProvider> in a parent component."
@@ -27,3 +25,27 @@ export function useCart() {
   }
   return context;
 }
+
+// Declaring outside component to avoid recreation on each render
+const initialState = {
+  data: {
+    email: "",
+    firstName: "",
+    lastName: "",
+    streetAddress: "",
+    city: "",
+    zipCode: 0,
+    country: "",
+    phone: "",
+  },
+  errors: {
+    email: [],
+    firstName: [],
+    lastName: [],
+    streetAddress: [],
+    city: [],
+    zipCode: [],
+    country: [],
+    phone: [],
+  },
+};
