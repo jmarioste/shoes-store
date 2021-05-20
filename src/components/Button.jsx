@@ -9,18 +9,19 @@ const Button = styled.button`
   touch-action: manipulation;
   cursor: pointer;
   background-image: none;
-  border: 1px solid transparent;
-  background-color: #5d6d7c;
-  color: white;
-  padding: 6px 12px;
-  font-size: 14px;
+  border: 0;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
   user-select: none;
 
   &:disabled {
     background-color: #9da7b0;
-    border: 1px solid #9da7b0;
     pointer-events: none;
     color: white;
+  }
+
+  &:hover {
+    background-color: var(--color-pimary-light);
   }
 `;
 

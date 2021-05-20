@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 const Wrapper = styled.div`
   position: relative;
@@ -10,14 +11,19 @@ const Wrapper = styled.div`
     height: 40px;
     width: 100px;
     text-align: center;
-    border: 1px solid #5d6d7c;
+    border: 1px solid var(--color-primary);
   }
   .step {
     position: absolute;
-    background-color: #5d6d7c;
+    background-color: var(--color-primary);
     height: 40px;
     width: 35px;
     padding: 0px;
+
+    &:hover {
+      background-color: var(--color-primary-dark);
+      transition: all 0.5s ease;
+    }
   }
   .plus {
     left: 0px;
@@ -48,10 +54,10 @@ const Stepper = (props) => {
     <Wrapper>
       <input type="text" value={value} onChange={handleChange} />
       <Button className="step plus" onClick={decrement}>
-        -
+        <FaMinus />
       </Button>
       <Button className="step minus" onClick={increment}>
-        +
+        <FaPlus />
       </Button>
     </Wrapper>
   );

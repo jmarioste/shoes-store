@@ -30,7 +30,7 @@ export default function Detail() {
       <ProductDetails>
         <h1>{product.name}</h1>
 
-        <h3>${product.price}</h3>
+        <h4>${product.price}</h4>
         <p id="size">Size</p>
         <Select
           id="size-select"

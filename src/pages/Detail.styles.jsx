@@ -23,7 +23,7 @@ export const ProductDetails = styled.div`
   grid-template-columns: repeat(3, 25%);
   justify-content: start;
   grid-template-rows: repeat(6, 1fr) 60%;
-  /* grid-row-gap: 0.5rem;   */
+  grid-row-gap: 1rem;
   grid-template-areas:
     "title title title title"
     "price price price price"
@@ -36,13 +36,11 @@ export const ProductDetails = styled.div`
     justify-content: center;
   }
 
-  h1 {
-    grid-area: title;
-    font-size: 2.5rem;
-    align-self: center;
-    font-weight: 300;
-  }
   h2 {
+    grid-area: title;
+    align-self: center;
+  }
+  h4 {
     grid-area: price;
   }
   #size {

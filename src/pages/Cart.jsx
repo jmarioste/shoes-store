@@ -2,7 +2,7 @@ import { useCart } from "contexts/CartContext";
 import React from "react";
 import { useNavigate } from "react-router";
 import useFetchAll from "../services/useFetchAll";
-import { Spinner } from "components";
+import { BigButton, Spinner } from "components";
 
 import {
   CartItem,
@@ -10,10 +10,11 @@ import {
   ProductName,
   Price,
   Content,
-  CartTitle,
   Total,
   CheckoutButton,
   Stepper,
+  CartPageTitle,
+  EmptyCart,
 } from "./Cart.styles";
 
 function Item({ item, products }) {
@@ -34,7 +35,7 @@ function Item({ item, products }) {
     <CartItem key={sku}>
       <img src={imageUrl} alt={name} />
       <ProductName>
-        <h3>{name}</h3>
+        <h5>{name}</h5>
         <p>Size: {size}</p>
       </ProductName>
       <Stepper
@@ -65,22 +66,26 @@ export default function Cart() {
   const hasItems = cart.length;
   return (
     <Content>
-      <CartTitle> Shopping Cart </CartTitle>
-      {/* <StepperX></StepperX> */}
+      <CartPageTitle> Shopping Cart </CartPageTitle>
       <CartList>
         {cart.map((item) => (
-          <Item key={item.key} item={item} products={data} />
+          <Item key={item.sku} item={item} products={data} />
         ))}
       </CartList>
       {hasItems ? (
         <React.Fragment>
           <Total>
-            <h1>Total: ${totalPrice.toFixed(2)}</h1>
+            <h5>Total: ${totalPrice.toFixed(2)}</h5>
           </Total>
           <CheckoutButton onClick={checkout}>Checkout</CheckoutButton>
         </React.Fragment>
       ) : (
-        <h2>Your cart is empty.</h2>
+        <EmptyCart>
+          <h4>Your cart is empty.</h4>
+          <BigButton onClick={() => navigate("/shoes")}>
+            Back to Shopping
+          </BigButton>
+        </EmptyCart>
       )}
     </Content>
   );

@@ -7,7 +7,9 @@ const StyledNavBar = styled.nav`
   display: flex;
   justify-content: center;
 
-  background-color: #f2efe2;
+  /* background-color: #f2efe2; */
+  background-color: var(--color-primary-dark);
+  color: var(--color-on-primary);
   width: 100%;
   font-size: 1rem;
 
@@ -23,21 +25,28 @@ const StyledNavBar = styled.nav`
       cursor: pointer;
       &:hover {
         transition: all 0.3s ease;
-        background-color: #fdd000;
+        background-color: var(--color-secondary);
+        a {
+          color: var(--color-on-secondary);
+        }
+        .badge {
+          background-color: var(--color-primary);
+          color: var(--color-on-primary);
+        }
       }
       a {
         text-decoration: none;
-        color: #5d6d7c;
+        color: var(--color-on-primary);
         padding: 20px;
       }
       .badge {
         margin-left: 10px;
         display: inline-block;
         width: 24px;
-        background-color: #5d6d7c;
+        background-color: var(--color-secondary);
         border-radius: 11px;
         font-size: 0.8rem;
-        color: white;
+        color: var(--color-on-secondary);
         text-align: center;
       }
     }
@@ -60,9 +69,10 @@ const NavBar = () => {
   return (
     <StyledNavBar>
       <ul>
-        <li className="brand">
+        <li className="link">
           <Link to="/">
-            <img alt="Carved Rock Fitness" src="/images/logo.png" />
+            {/* <img alt="Carved Rock Fitness" src="/images/logo.png" /> */}
+            Carved Rock Fitness
           </Link>
         </li>
         <li className="link">

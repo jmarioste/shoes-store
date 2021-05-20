@@ -21,7 +21,7 @@ const ProductItem = (props) => {
     <StyledProductItem>
       <Link to={to}>
         <img src={`/images/${image}`} alt={name} />
-        <h3>{name}</h3>
+        <h5>{name}</h5>
         <p>${price}</p>
       </Link>
     </StyledProductItem>
