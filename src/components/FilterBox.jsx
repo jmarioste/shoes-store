@@ -12,7 +12,7 @@ const Container = styled.section`
 const FilterBox = ({ value, onChange }) => {
   return (
     <Container>
-      <label htmlFor="size">Filter by Size:</label>{" "}
+      <label htmlFor="size">Filter by Size</label>{" "}
       <Select id="size" value={value} onChange={onChange}>
         <option value="">All sizes</option>
         <option value="7">7</option>

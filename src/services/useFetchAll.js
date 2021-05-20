@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 export default function useFetchAll(urls) {
+  urls = Array.from(new Set(urls));
   const prevUrls = useRef([]);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);

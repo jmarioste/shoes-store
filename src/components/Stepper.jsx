@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 
-const Styled = styled.div`
+const Wrapper = styled.div`
   position: relative;
   cursor: pointer;
+  margin: 20px;
   input {
     height: 40px;
     width: 100px;
@@ -44,7 +45,7 @@ const Stepper = (props) => {
     onChange(value + 1);
   };
   return (
-    <Styled>
+    <Wrapper>
       <input type="text" value={value} onChange={handleChange} />
       <Button className="step plus" onClick={decrement}>
         -
@@ -52,7 +53,7 @@ const Stepper = (props) => {
       <Button className="step minus" onClick={increment}>
         +
       </Button>
-    </Styled>
+    </Wrapper>
   );
 };
 

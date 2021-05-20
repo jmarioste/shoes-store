@@ -18,7 +18,7 @@ const StyledProductItem = styled.div`
 const ProductItem = (props) => {
   const { to, image, name, price } = props;
   return (
-    <StyledProductItem className="p-col-12 p-md-4">
+    <StyledProductItem>
       <Link to={to}>
         <img src={`/images/${image}`} alt={name} />
         <h3>{name}</h3>
