@@ -12,6 +12,7 @@ import {
   ContinueButton,
 } from "./Checkout.styles.jsx";
 import CheckoutSummaryDetails from "components/CheckoutSummaryDetails.jsx";
+import { useNavigate } from "react-router";
 
 // Declaring outside component to avoid recreation on each render
 const initialState = {
@@ -57,6 +58,7 @@ function renderError(error, index, _class) {
 }
 export default function Checkout() {
   console.log("inside checkout");
+  const navigate = useNavigate();
   const { dispatch: dispatchCart } = useCart();
   const [checkoutState, dispatch] = useReducer(checkoutReducer, initialState);
   const [status, setStatus] = useState(STATUS.IDLE);
@@ -100,6 +102,7 @@ export default function Checkout() {
         await saveShippingAddress(checkoutState.data);
         setStatus(STATUS.COMPLETED);
         dispatchCart({ type: "empty" });
+        navigate("/finalcheckout");
       } catch (error) {
         console.error(error);
         // setStatus(STATUS.ERROR);

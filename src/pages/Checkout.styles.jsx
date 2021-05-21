@@ -4,10 +4,12 @@ import { Content as _Content, BigButton } from "components";
 
 export const Content = styled(_Content)`
   align-items: stretch;
+  align-content: flex-start;
   align-self: center;
   padding: 1.5rem;
   max-width: 960px;
   display: grid;
+  background-color: #f3f3f3;
   grid-gap: 1.5rem;
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
