@@ -41,8 +41,14 @@ export const CheckoutForm = styled.div`
     padding-left: 0;
     grid-column: 1/3;
   }
-  input {
+  .field {
     grid-column: 1/3;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  input {
     font-size: 1rem;
     color: #495057;
     background: #ffffff;
@@ -56,13 +62,12 @@ export const CheckoutForm = styled.div`
     grid-column: 1/3;
   }
   @media screen and (min-width: 960px) {
-    #firstName,
-    #zipCode {
+    .firstName,
+    .zipCode {
       grid-column: 1/2;
     }
-
-    #lastName,
-    #city {
+    .lastName,
+    .city {
       grid-column: 2/3;
     }
     button {

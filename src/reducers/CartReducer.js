@@ -1,3 +1,4 @@
+import { produce } from "immer";
 export default function cartReducer(cart, action) {
   const { id, sku, quantity, price } = action;
   switch (action.type) {
@@ -13,15 +14,14 @@ export default function cartReducer(cart, action) {
 }
 
 function addToCart(cart, id, sku, price) {
-  const isItemInCart = cart.find((item) => item.sku === sku);
-
-  if (isItemInCart) {
-    return cart.map((item) =>
-      item.sku === sku ? { ...item, quantity: item.quantity + 1, price } : item
-    );
-  } else {
-    return [...cart, { id, sku, quantity: 1, price }];
-  }
+  return produce(cart, (draft) => {
+    const itemInCart = draft.find((item) => item.sku === sku);
+    if (itemInCart) {
+      itemInCart.quantity += 1;
+    } else {
+      draft.push({ id, sku, quantity: 1, price });
+    }
+  });
 }
 
 function updateQuantity(cart, sku, quantity) {
