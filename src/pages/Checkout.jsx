@@ -1,5 +1,3 @@
-// @ts-nocheck
-import { BigButton } from "components";
 import { useCart } from "contexts/CartContext";
 import React, { useReducer, useState } from "react";
 import { checkoutReducer, validators } from "reducers/CheckoutReducer";
@@ -7,7 +5,13 @@ import { saveShippingAddress } from "services/shippingService";
 import { FiArrowRight } from "react-icons/fi";
 
 import { getAllErrors } from "utils/validators";
-import { Content, CheckoutForm, CheckoutSummary } from "./Checkout.styles.jsx";
+import {
+  Content,
+  CheckoutForm,
+  CheckoutSummary,
+  ContinueButton,
+} from "./Checkout.styles.jsx";
+import CheckoutSummaryDetails from "components/CheckoutSummaryDetails.jsx";
 
 // Declaring outside component to avoid recreation on each render
 const initialState = {
@@ -182,16 +186,18 @@ export default function Checkout() {
           onChange={handleChange}
           onBlur={handleBlur}
         ></input>
-        <BigButton
+        <ContinueButton
           type="submit"
           disabled={status === STATUS.SUBMITTING}
           onClick={handleSubmit}
         >
-          Continue <FiArrowRight />
-        </BigButton>
+          <p>Continue</p>
+          <FiArrowRight />
+        </ContinueButton>
       </CheckoutForm>
       <CheckoutSummary>
         <h5>Summary</h5>
+        <CheckoutSummaryDetails></CheckoutSummaryDetails>
       </CheckoutSummary>
     </Content>
   );

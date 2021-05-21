@@ -1,4 +1,3 @@
-import "primeflex/primeflex.css";
 import React from "react";
 import { GlobalStyles } from "GlobalStyles";
 import { Route, Routes } from "react-router-dom";

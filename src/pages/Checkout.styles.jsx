@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
-import { Content as _Content } from "components";
+import { Content as _Content, BigButton } from "components";
 
 export const Content = styled(_Content)`
   align-items: stretch;
-  align-self: stretch;
+  align-self: center;
   padding: 1.5rem;
-  max-width: 100vw;
+  max-width: 960px;
   display: grid;
+  grid-gap: 1.5rem;
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
     "title title title title"
@@ -72,4 +73,13 @@ export const CheckoutForm = styled.div`
 
 export const CheckoutSummary = styled.div`
   grid-area: summary;
+`;
+
+export const ContinueButton = styled(BigButton)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    font-size: 1.5rem;
+  }
 `;

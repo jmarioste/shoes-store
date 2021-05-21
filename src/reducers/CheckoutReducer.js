@@ -11,88 +11,73 @@ export function checkoutReducer(state, action) {
 
 function updateReducer(state, action) {
   const { type, value } = action;
-  switch (type) {
-    case "update_email":
-      return produce(state, (draft) => {
+  return produce(state, (draft) => {
+    switch (type) {
+      case "update_email":
         draft.data.email = value;
-      });
-
-    case "update_firstName":
-      return produce(state, (draft) => {
+        break;
+      case "update_firstName":
         draft.data.firstName = value;
-      });
-    case "update_lastName":
-      return produce(state, (draft) => {
+        break;
+      case "update_lastName":
         draft.data.lastName = value;
-      });
-    case "update_streetAddress":
-      return produce(state, (draft) => {
+        break;
+      case "update_streetAddress":
         draft.data.streetAddress = value;
-      });
-    case "update_zipCode":
-      return produce(state, (draft) => {
+        break;
+      case "update_zipCode":
         draft.data.zipCode = value;
-      });
-    case "update_city":
-      return produce(state, (draft) => {
+        break;
+      case "update_city":
         draft.data.city = value;
-      });
-    case "update_country":
-      return produce(state, (draft) => {
+        break;
+      case "update_country":
         draft.data.country = value;
-      });
-    case "update_phone":
-      return produce(state, (draft) => {
+        break;
+      case "update_phone":
         draft.data.phone = value;
-      });
-    default:
-      throw new Error(`Unhandled exeption for ${action.type}`);
-  }
+        break;
+      default:
+        throw new Error(`Unhandled exeption for ${action.type}`);
+    }
+  });
 }
 
 function errorReducer(state, action) {
   const { type, value } = action;
-  switch (type) {
-    case "error_all": {
-      return produce(state, (draft) => {
+  return produce(state, (draft) => {
+    switch (type) {
+      case "error_all":
         draft.errors = value;
-      });
-    }
-    case "error_email":
-      return produce(state, (draft) => {
+        break;
+      case "error_email":
         draft.errors.email = getErrors("email", value);
-      });
-    case "error_firstName":
-      return produce(state, (draft) => {
+        break;
+      case "error_firstName":
         draft.errors.firstName = getErrors("firstName", value);
-      });
-    case "error_lastName":
-      return produce(state, (draft) => {
+        break;
+      case "error_lastName":
         draft.errors.lastName = getErrors("lastName", value);
-      });
-    case "error_streetAddress":
-      return produce(state, (draft) => {
+        break;
+      case "error_streetAddress":
         draft.errors.streetAddress = getErrors("streetAddress", value);
-      });
-    case "error_zipCode":
-      return produce(state, (draft) => {
+        break;
+      case "error_zipCode":
         draft.errors.zipCode = getErrors("zipCode", value);
-      });
-    case "error_city":
-      return produce(state, (draft) => {
+        break;
+      case "error_city":
         draft.errors.city = getErrors("city", value);
-      });
-    case "error_country":
-      return produce(state, (draft) => {
+        break;
+      case "error_country":
         draft.errors.country = getErrors("country", value);
-      });
-    case "error_phone":
-      return produce(state, (draft) => {
+        break;
+      case "error_phone":
         draft.errors.phone = getErrors("phone", value);
-      });
-    default:
-      throw new Error(`Unhandled exeption for ${action.type}`);
-  }
+        break;
+      default:
+        throw new Error(`Unhandled exeption for ${action.type}`);
+    }
+  });
 }
 
 function getErrors(type, value) {

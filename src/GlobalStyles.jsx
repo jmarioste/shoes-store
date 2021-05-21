@@ -12,7 +12,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-on-secondary: #222222;
     --color-error: #B00020;
     --size-h1: 6rem;
-    --size-h2: 
+    --color-surface: #e3e3e3
   }
   #root {
     display: flex;
