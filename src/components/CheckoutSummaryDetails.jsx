@@ -5,7 +5,7 @@ import useFetchAll from "services/useFetchAll";
 import styled from "styled-components";
 
 const Wrapper = styled.ul`
-  box-shadow: 3px 3px 6px black;
+  box-shadow: 3px 3px 6px #ddd;
   margin-top: 10px;
   padding: 10px 0;
   li {

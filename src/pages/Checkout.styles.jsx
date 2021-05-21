@@ -18,12 +18,17 @@ export const Content = styled(_Content)`
     grid-column: title;
   }
 
+  @media screen and (max-width: 960px) {
+    grid-template-columns: 1fr;
+    align-self: stretch;
+  }
   @media screen and (max-width: 576px) {
     grid-template-columns: 1fr;
+    align-self: stretch;
     grid-template-areas:
       "title "
-      "form"
-      "summary";
+      "summary"
+      "form";
   }
   label[role="error"] {
     color: var(--color-error);
@@ -61,7 +66,7 @@ export const CheckoutForm = styled.div`
   button {
     grid-column: 1/3;
   }
-  @media screen and (min-width: 960px) {
+  @media screen and (min-width: 720px) {
     .firstName,
     .zipCode {
       grid-column: 1/2;

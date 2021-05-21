@@ -1,0 +1,14 @@
+Checkout billing page form inputs
+Card details
+    - Name on Card
+    - Card number inputs
+        - Card provider icon should reflect the card number.  (MasterCard, Visa, AMEX, Discover)
+    - Expiry Date - masked input with date picker
+    - CVV - password input
+Billing Address
+    - checkbox if billing address is same as shipping
+    - Copy shipping address if checked.
+    - Same validation for billing address fields.
+
+Proceed to payment button
+    - should call localhost /payment from server. and will return response OK or not.
