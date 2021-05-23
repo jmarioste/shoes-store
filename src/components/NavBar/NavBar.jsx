@@ -49,7 +49,7 @@ const NavBar = () => {
 
         <NavMenuIcon>
           <a onClick={() => setShowList(!showList)}>
-            <FiMenu />
+            <FiMenu size={20} />
           </a>
         </NavMenuIcon>
       </NavMenu>

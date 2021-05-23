@@ -17,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
   #root {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     color: var(--color-primary-dark);
