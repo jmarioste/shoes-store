@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 
 import { checkoutReducer } from "reducers/CheckoutReducer";
-import { isValidEmail, required } from "utils/validators";
 
 // const initialInfo = loadCartFromStorage();
 const CheckoutContext = createContext(null);

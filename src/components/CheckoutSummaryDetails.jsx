@@ -6,13 +6,14 @@ import styled from "styled-components";
 
 const Wrapper = styled.ul`
   box-shadow: 3px 3px 6px #ddd;
+  background-color: #ffffff;
   margin-top: 10px;
   padding: 10px 0;
   li {
     display: flex;
     align-items: center;
 
-    padding: 0 40px;
+    padding: 0 1.25rem;
     img {
       max-width: 80px;
       max-height: 100px;
@@ -31,7 +32,7 @@ const Wrapper = styled.ul`
   }
   .totalPrice {
     text-align: right;
-    padding: 10px 40px;
+    padding: 10px 1.25rem;
     border-top: 1px solid var(--color-primary);
     font-weight: 700;
   }

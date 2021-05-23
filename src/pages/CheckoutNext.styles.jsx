@@ -6,7 +6,7 @@ import {
 } from "./Checkout.styles.jsx";
 
 export const Content = styled(_Content)`
-  margin: 1rem;
+  /* margin: 1rem; */
 `;
 
 export const CheckoutForm = styled(_Form)`

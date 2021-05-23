@@ -11,5 +11,5 @@ export { default as Stepper } from "./Stepper";
 export { default as Header } from "./Header";
 export { default as Footer } from "./Footer";
 export { default as ErrorBoundary } from "./ErrorBoundary";
-export { default as CheckoutFirstForm } from "./CheckoutFirstForm";
 export { default as PageNotFound } from "./PageNotFound";
+export { default as CheckoutSummaryDetails } from "./CheckoutSummaryDetails";

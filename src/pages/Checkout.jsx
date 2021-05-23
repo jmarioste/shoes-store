@@ -1,6 +1,4 @@
-import { useCart } from "contexts/CartContext";
-import React, { useReducer, useState } from "react";
-import { checkoutReducer, validators } from "reducers/CheckoutReducer";
+import React, { useState } from "react";
 import { saveShippingAddress } from "services/shippingService";
 import { FiArrowRight } from "react-icons/fi";
 
@@ -11,32 +9,10 @@ import {
   CheckoutSummary,
   ContinueButton,
 } from "./Checkout.styles.jsx";
-import CheckoutSummaryDetails from "components/CheckoutSummaryDetails.jsx";
+import { CheckoutSummaryDetails } from "components";
 import { useNavigate } from "react-router";
-
-// Declaring outside component to avoid recreation on each render
-const initialState = {
-  data: {
-    email: "",
-    firstName: "",
-    lastName: "",
-    streetAddress: "",
-    city: "",
-    zipCode: 0,
-    country: "",
-    phone: "",
-  },
-  errors: {
-    email: [],
-    firstName: [],
-    lastName: [],
-    streetAddress: [],
-    city: [],
-    zipCode: [],
-    country: [],
-    phone: [],
-  },
-};
+import { useCheckout } from "contexts/CheckoutContext.js";
+import { validators } from "reducers/CheckoutReducer.js";
 
 const STATUS = {
   IDLE: 1,
@@ -59,8 +35,7 @@ function renderError(error, index, _class) {
 export default function Checkout() {
   console.log("inside checkout");
   const navigate = useNavigate();
-  const { dispatch: dispatchCart } = useCart();
-  const [checkoutState, dispatch] = useReducer(checkoutReducer, initialState);
+  const { checkoutState, dispatch } = useCheckout();
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState("");
 
@@ -101,7 +76,6 @@ export default function Checkout() {
       try {
         await saveShippingAddress(checkoutState.data);
         setStatus(STATUS.COMPLETED);
-        dispatchCart({ type: "empty" });
         navigate("/finalcheckout");
       } catch (error) {
         console.error(error);

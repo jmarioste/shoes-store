@@ -1,39 +1,39 @@
 import { useCart } from "contexts/CartContext";
-import React, { useReducer, useState } from "react";
-import { checkoutReducer, validators } from "reducers/CheckoutReducer";
+import React, { useEffect, useReducer, useState } from "react";
+import { checkoutNextReducer, validators } from "reducers/CheckoutNextReducer";
 import { saveShippingAddress } from "services/shippingService";
 import { FiArrowRight } from "react-icons/fi";
-import Checkbox from "@material-ui/core/Checkbox";
 import { getAllErrors } from "utils/validators";
 import { Content, CheckoutForm, MyCheckbox } from "./CheckoutNext.styles.jsx";
 import CheckoutSummaryDetails from "components/CheckoutSummaryDetails.jsx";
 import { CheckoutSummary, ContinueButton } from "./Checkout.styles.jsx";
+import { useCheckout } from "contexts/CheckoutContext.js";
 
 // Declaring outside component to avoid recreation on each render
 const initialState = {
   data: {
     nameOnCard: "",
     cardNumber: "",
-    expiryDate: "",
+    cardExpiry: "",
     cvv: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    streetAddress: "",
-    city: "",
-    zipCode: 0,
-    country: "",
-    phone: "",
+    billingFirstName: "",
+    billingLastName: "",
+    billingStreetAddress: "",
+    billingCity: "",
+    billingZipCode: 0,
+    billingCountry: "",
   },
   errors: {
-    email: [],
-    firstName: [],
-    lastName: [],
-    streetAddress: [],
-    city: [],
-    zipCode: [],
-    country: [],
-    phone: [],
+    nameOnCard: [],
+    cardNumber: [],
+    cardExpiry: [],
+    cvv: [],
+    billingFirstName: [],
+    billingLastName: [],
+    billingStreetAddress: [],
+    billingCity: [],
+    billingZipCode: [],
+    billingCountry: [],
   },
 };
 
@@ -58,37 +58,43 @@ function renderError(error, index, _class) {
 export default function CheckoutNext() {
   console.log("inside checkout");
   const { dispatch: dispatchCart } = useCart();
-  const [checkoutState, dispatch] = useReducer(checkoutReducer, initialState);
+  const { checkoutState: state } = useCheckout();
+  const [checkoutState, dispatch] = useReducer(
+    checkoutNextReducer,
+    initialState
+  );
   const [status, setStatus] = useState(STATUS.IDLE);
   const [saveError, setSaveError] = useState("");
   const [isSameAddress, setIsSameAddress] = useState(true);
   const errors = checkoutState.errors;
+  console.log(checkoutState);
 
   function handleChange(event) {
     event.persist();
     const { id, value } = event.target;
-    // dispatch({
-    //   type: "update_" + id,
-    //   value: value,
-    // });
+    dispatch({
+      type: "update_" + id,
+      value: value,
+    });
   }
   function handleChangeAddress(event) {
     event.persist();
     const { checked } = event.target;
     console.log(event.target, checked);
     setIsSameAddress(!isSameAddress);
-    //dispatch copy shipping address to billing addresss
   }
+
   function handleBlur(event) {
     event.preventDefault();
+    console.log("inside handle blur");
     event.persist();
     const { id, value } = event.target;
     if (!validators[id]) return;
-
-    // dispatch({
-    //   type: "error_" + id,
-    //   value: value,
-    // });
+    console.log(id, value);
+    dispatch({
+      type: "error_" + id,
+      value: value,
+    });
   }
 
   function isFormValid(errors) {
@@ -99,13 +105,15 @@ export default function CheckoutNext() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    event.persist();
     setStatus(STATUS.SUBMITTING);
     const _errors = getAllErrors(checkoutState.data, validators);
+
     if (isFormValid(_errors)) {
       try {
         await saveShippingAddress(checkoutState.data);
         setStatus(STATUS.COMPLETED);
-        dispatchCart({ type: "empty" });
+        // dispatchCart({ type: "empty" });
       } catch (error) {
         console.error(error);
         // setStatus(STATUS.ERROR);
@@ -130,7 +138,7 @@ export default function CheckoutNext() {
       <CheckoutForm>
         <h5>Card Informaton</h5>
         <div className="field">
-          {errors.email.map(renderError)}
+          {errors.nameOnCard.map(renderError)}
           <input
             id="nameOnCard"
             type="text"
@@ -140,17 +148,18 @@ export default function CheckoutNext() {
           ></input>
         </div>
         <div className="field">
-          {errors.email.map(renderError)}
+          {errors.cardNumber.map(renderError)}
           <input
             id="cardNumber"
             type="number"
+            inputMode="numeric"
             placeholder="Card number"
             onChange={handleChange}
             onBlur={handleBlur}
           ></input>
         </div>
         <div className="field">
-          {errors.email.map(renderError)}
+          {errors.cardExpiry.map(renderError)}
           <input
             id="cardExpiry"
             type="month"
@@ -160,10 +169,10 @@ export default function CheckoutNext() {
           ></input>
         </div>
         <div className="field">
-          {errors.email.map(renderError)}
+          {errors.cvv.map(renderError)}
           <input
             id="cvv"
-            type="password"
+            type="number"
             placeholder="cvv"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -182,7 +191,7 @@ export default function CheckoutNext() {
           <React.Fragment>
             <label>Full name</label>
             <div className="field firstName">
-              {errors.firstName.map(renderError)}
+              {errors.billingFirstName.map(renderError)}
               <input
                 id="firstName"
                 type="text"
@@ -192,7 +201,7 @@ export default function CheckoutNext() {
               ></input>
             </div>
             <div className="field lastName">
-              {errors.lastName.map((error, index) =>
+              {errors.billingLastName.map((error, index) =>
                 renderError(error, index, "lastName")
               )}
               <input
@@ -205,7 +214,7 @@ export default function CheckoutNext() {
             </div>
             <label>Complete address: </label>
             <div className="field">
-              {errors.streetAddress.map(renderError)}
+              {errors.billingStreetAddress.map(renderError)}
               <input
                 id="streetAddress"
                 type="text"
@@ -215,7 +224,7 @@ export default function CheckoutNext() {
               ></input>
             </div>
             <div className="field zipCode">
-              {errors.zipCode.map(renderError)}
+              {errors.billingZipCode.map(renderError)}
               <input
                 id="zipCode"
                 type="text"
@@ -225,7 +234,7 @@ export default function CheckoutNext() {
               ></input>
             </div>
             <div className="field city">
-              {errors.city.map((error, index) =>
+              {errors.billingCity.map((error, index) =>
                 renderError(error, index, "city")
               )}
               <input
@@ -237,21 +246,11 @@ export default function CheckoutNext() {
               ></input>
             </div>
             <div className="field">
-              {errors.country.map(renderError)}
+              {errors.billingCountry.map(renderError)}
               <input
                 id="country"
                 type="text"
                 placeholder="Country"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              ></input>
-            </div>
-
-            <div className="field">
-              <input
-                id="phone"
-                type="text"
-                placeholder="Phone (optional)"
                 onChange={handleChange}
                 onBlur={handleBlur}
               ></input>
@@ -267,10 +266,10 @@ export default function CheckoutNext() {
           <FiArrowRight />
         </ContinueButton>
       </CheckoutForm>
-      <CheckoutSummary>
+      {/* <CheckoutSummary>
         <h5>Summary</h5>
         <CheckoutSummaryDetails></CheckoutSummaryDetails>
-      </CheckoutSummary>
+      </CheckoutSummary> */}
     </Content>
   );
 }
