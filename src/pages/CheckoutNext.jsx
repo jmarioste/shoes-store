@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { useCart } from "contexts/CartContext";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useReducer, useState } from "react";
 import { checkoutNextReducer, validators } from "reducers/CheckoutNextReducer";
 import { saveShippingAddress } from "services/shippingService";
 import { FiArrowRight } from "react-icons/fi";
@@ -57,8 +58,18 @@ function renderError(error, index, _class) {
 }
 export default function CheckoutNext() {
   console.log("inside checkout");
-  const { dispatch: dispatchCart } = useCart();
   const { checkoutState: state } = useCheckout();
+  console.log("State", state);
+  initialState.data = {
+    ...initialState.data,
+    billingFirstName: state.data.firstName,
+    billingLastName: state.data.lastName,
+    billingStreetAddress: state.data.streetAddress,
+    billingCity: state.data.city,
+    billingZipCode: state.data.zipCode,
+    billingCountry: state.data.country,
+  };
+  console.log("Initial State", initialState.data);
   const [checkoutState, dispatch] = useReducer(
     checkoutNextReducer,
     initialState
@@ -80,8 +91,32 @@ export default function CheckoutNext() {
   function handleChangeAddress(event) {
     event.persist();
     const { checked } = event.target;
-    console.log(event.target, checked);
     setIsSameAddress(!isSameAddress);
+    if (checked) {
+      dispatch({
+        type: "copy",
+        value: {
+          billingFirstName: state.data.firstName,
+          billingLastName: state.data.lastName,
+          billingStreetAddress: state.data.streetAddress,
+          billingCity: state.data.city,
+          billingZipCode: state.data.zipCode,
+          billingCountry: state.data.country,
+        },
+      });
+    } else {
+      dispatch({
+        type: "copy",
+        value: {
+          billingFirstName: "",
+          billingLastName: "",
+          billingStreetAddress: "",
+          billingCity: "",
+          billingZipCode: "",
+          billingCountry: "",
+        },
+      });
+    }
   }
 
   function handleBlur(event) {
@@ -266,10 +301,10 @@ export default function CheckoutNext() {
           <FiArrowRight />
         </ContinueButton>
       </CheckoutForm>
-      {/* <CheckoutSummary>
+      <CheckoutSummary>
         <h5>Summary</h5>
         <CheckoutSummaryDetails></CheckoutSummaryDetails>
-      </CheckoutSummary> */}
+      </CheckoutSummary>
     </Content>
   );
 }

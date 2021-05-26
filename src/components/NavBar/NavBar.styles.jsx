@@ -21,11 +21,11 @@ export const NavList = styled.ul`
   @media screen and (max-width: 720px) {
     flex-direction: column;
     flex-grow: 1;
-    position: fixed;
+    position: absolute;
     left: ${(props) => (props.show ? 0 : "-100vw")};
     top: 60px;
     width: 100vw;
-    height: calc(100vh - 60px);
+    height: calc(90vh);
     align-items: stretch;
     background-color: var(--color-primary-dark);
     transition: 0.3s all ease;
@@ -53,6 +53,9 @@ export const NavItem = styled.li`
   &:hover {
     transition: all 0.3s ease;
     background-color: var(--color-secondary);
+    a {
+      color: var(--color-on-secondary);
+    }
   }
 
   a {
