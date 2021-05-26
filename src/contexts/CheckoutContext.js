@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { createContext, useContext, useReducer } from "react";
 
 import { checkoutReducer } from "reducers/CheckoutReducer";
@@ -29,13 +30,13 @@ export function useCheckout() {
 const initialState = {
   data: {
     email: "",
+    phone: "",
     firstName: "",
     lastName: "",
     streetAddress: "",
     city: "",
     zipCode: 0,
     country: "",
-    phone: "",
   },
   errors: {
     email: [],
